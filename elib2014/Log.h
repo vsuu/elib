@@ -20,6 +20,7 @@ public:
 private:
 
 };
+#define rft test
 
 #if GLOBAL_LOG_LEVEL > LOGLEVEL::ERR
 #define LOG_ERR
