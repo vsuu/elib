@@ -21,7 +21,6 @@ inline char hex2char(unsigned char c)
 template<typename OutputIter>
 int Hex2Bin(const char *str,OutputIter out)
 {
-    static_assert(sizeof(*out)==1,"*OutputIter should be 1 byte len");
     if(nullptr==str)return 0;
 
     const char *beg_it=str;
@@ -46,7 +45,7 @@ inline int Hex2Bin(const std::string &str,OutputIter out)
 {
     return Hex2Bin(str.c_str(),out);
 }
-template<typename OutputIter>
+
 inline std::string Hex2Bin(const std::string &str)
 {
     std::string ret;
@@ -71,7 +70,7 @@ int Bin2Hex(const void *b,const void *e,OutputIter out)
 template<typename OutputIter>
 inline int Bin2Hex(const void *b,const unsigned int l,OutputIter out)
 {
-    return Bin2Hex(b,b+l,out);
+    return Bin2Hex(b,(const unsigned char *)b+l,out);
 }
 inline std::string Bin2Hex(const void *b,const void *e)
 {
@@ -83,6 +82,12 @@ inline std::string Bin2Hex(const void *b,unsigned int l)
 {
     return Bin2Hex(b,static_cast<const char *>(b)+l);
 }
+
+//std::string wstr2str(const wchar_t *);
+std::string wstr2str(const std::wstring& wstr);
+
+//std::wstring str2wstr(const char *);
+std::wstring str2wstr(const std::string &str);
 
 
 __LIB_NAME_SPACE_END__
