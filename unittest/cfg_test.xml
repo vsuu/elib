@@ -1,0 +1,21 @@
+<root>
+	<c_string_test>
+		<single>renfeiting</single>
+		<list>abc</list>
+		<list>efg</list>
+	</c_string_test>
+	<int_test>
+		<single>30</single>
+		<list>4</list>
+		<list>5</list>
+	</int_test>
+	<double_test>
+		<single>3.500000</single>
+		<list>5.500000</list>
+	</double_test>
+	<bool_test>
+		<single>true</single>
+		<list>false</list>
+	</bool_test>
+</root>
+
