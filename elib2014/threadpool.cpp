@@ -16,7 +16,7 @@ void WorkThread::ThreadFun()
 	{
 		function_();
 		function_ = nullptr;
-		cv_j.notify_one();
+        flag_->set_value();
 	}
 	do
 	{
@@ -27,7 +27,7 @@ void WorkThread::ThreadFun()
 		}
 		function_();
 		function_ = nullptr;
-		cv_j.notify_one();
+        flag_->set_value();
 	} while (true);
 }
 
@@ -36,8 +36,8 @@ void WorkThread::ThreadFun()
 
 WorkThread *ThreadPool::AllocThread()
 {
-	std::lock_guard<std::mutex> lock(locker_);
 	WorkThread * ret = nullptr;
+	std::lock_guard<std::mutex> lock(locker_);
 	if (free_set_.empty())
 	{
 		ret = new WorkThread();

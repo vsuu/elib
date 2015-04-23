@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="头文件\rapidxml">
+      <UniqueIdentifier>{7193e645-389d-48f9-ba0a-979a4037fe92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -42,6 +45,39 @@
     <ClInclude Include="ObjectPool.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="range.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassAttr.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CfgBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidxml\rapidxml.hpp">
+      <Filter>头文件\rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidxml\rapidxml_iterators.hpp">
+      <Filter>头文件\rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidxml\rapidxml_print.hpp">
+      <Filter>头文件\rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidxml\rapidxml_utils.hpp">
+      <Filter>头文件\rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="BinData.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BerTLV.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TLVDescription.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BerTLVInterpreter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="strop.cc">
@@ -51,6 +87,24 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="TimeCost.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CfgBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BinData.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BerTLV.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TLVDescription.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BerTLVInterpreter.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
