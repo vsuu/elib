@@ -5,5 +5,8 @@
 #define __LIB_NAME_SPACE_BEGIN__  namespace __LIB_NAME__ {
 #define __LIB_NAME_SPACE_END__    }
 
+#define ELIB_STRINGLINE(x) #x
+#define ELIB_LINETOSTRING(x) ELIB_STRINGLINE(x)
+#define ERR_WHERE  "error at " __FILE__  ", line " ELIB_LINETOSTRING(__LINE__) ":"
 
 #endif // _LIB_BASE_H_RFT

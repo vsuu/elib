@@ -122,10 +122,12 @@ void Qsort(T *arr, int len)
 }
 void CfgTest();
 void TestBerTLV();
+void ApduTest();
 int main(int argc, char* argv[])
 {
     CfgTest();
     TestBerTLV();
+    ApduTest();
     system("pause");
     return 0;
 }

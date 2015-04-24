@@ -21,7 +21,7 @@ public:
     XMLCfgFile();
     ~XMLCfgFile();
     void Load(const char *file_name);//加载xml文件
-    void Save();//保存到xml文件
+    void Save()const;//保存到xml文件
 
     template<class T>
     void Add(const char *path, T);
@@ -29,15 +29,15 @@ public:
     void Del(const char *path, T);
     void Del(const char *path);
     template<class T>
-    T Get(const char *path);
+    T Get(const char *path)const;
     template<class T>
-    std::vector<T> GetList(const char *path);
+    std::vector<T> GetList(const char *path)const;
     template<class T>
     void Set(const char *path, T);
     template<class T>
     void Set(const char *path, T old_value, T new_value);
     template<class T>
-    void Set(const char *path, std::vector<T> &);
+    void Set(const char *path, const std::vector<T> &);
 private:
     _XMLCFGFile_impl *impl_;
 };

@@ -92,6 +92,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Apdu.h" />
     <ClInclude Include="BerTLV.h" />
     <ClInclude Include="BerTLVInterpreter.h" />
     <ClInclude Include="BinData.h" />

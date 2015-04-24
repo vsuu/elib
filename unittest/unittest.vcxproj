@@ -99,6 +99,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ApduTest.cpp" />
     <ClCompile Include="BerTLVTest.cpp" />
     <ClCompile Include="CfgTest.cpp" />
     <ClCompile Include="stdafx.cpp">

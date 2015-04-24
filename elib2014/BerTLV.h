@@ -41,7 +41,7 @@ public:
     {
         if (!IsStruct())
         {
-            throw std::logic_error("叶子结点不能有子结点");
+            throw std::logic_error(ERR_WHERE "叶子结点不能有子结点");
         }
     }
 
@@ -111,7 +111,7 @@ public:
         }
         else
         {
-            throw std::logic_error("叶子结点不能调用本函数");
+            throw std::logic_error(ERR_WHERE "叶子结点不能调用本函数");
         }
     }
     void SetValue(BerTLVList && list)
@@ -122,7 +122,7 @@ public:
         }
         else
         {
-            throw std::logic_error("叶子结点不能调用本函数");
+            throw std::logic_error(ERR_WHERE "叶子结点不能调用本函数");
         }
     }
 
@@ -334,7 +334,7 @@ static InputIterator BerTLV::ParseTag(InputIterator beg, InputIterator end, TagT
     static_assert(sizeof(std::iterator_traits<InputIterator>::value_type) == 1, "ParseTag,InputIterator 必须指向字节流");
     if (beg == end)
     {
-        throw std::invalid_argument("ParseTag 出错，输入为空");
+        throw std::invalid_argument(ERR_WHERE "ParseTag 出错，输入为空");
     }
     tag = *beg++;
     if ((tag & 0x1F) != 0x1F)
@@ -357,7 +357,7 @@ static InputIterator BerTLV::ParseTag(InputIterator beg, InputIterator end, TagT
             return beg;
         }
     }
-    throw std::invalid_argument("ParseTag 出错");
+    throw std::invalid_argument(ERR_WHERE "ParseTag 出错");
 }
 template<typename InputIterator>
 InputIterator BerTLV::ParseLen(InputIterator beg, InputIterator end, uint32_t & len)
@@ -365,7 +365,7 @@ InputIterator BerTLV::ParseLen(InputIterator beg, InputIterator end, uint32_t & 
     static_assert(sizeof(std::iterator_traits<InputIterator>::value_type) == 1, "InputIterator 必须指向字节流");
     if (beg == end)
     {
-        throw std::invalid_argument("ParseLen 出错,位置1");//输入为空
+        throw std::invalid_argument(ERR_WHERE "ParseLen 出错,位置1");//输入为空
     }
     auto data = *beg++;
     len = static_cast<unsigned char>(data);
@@ -376,7 +376,7 @@ InputIterator BerTLV::ParseLen(InputIterator beg, InputIterator end, uint32_t & 
     size_t llen = len & 0x7F;
     if (llen > 4)
     {
-        throw std::invalid_argument("ParseLen 出错,位置2");//长度数据超过4字节
+        throw std::invalid_argument(ERR_WHERE "ParseLen 出错,位置2");//长度数据超过4字节
     }
 
     len = 0;
@@ -392,7 +392,7 @@ InputIterator BerTLV::ParseLen(InputIterator beg, InputIterator end, uint32_t & 
             return beg;
         }
     }
-    throw std::invalid_argument("ParseLen 出错,位置3");//数据不够
+    throw std::invalid_argument(ERR_WHERE "ParseLen 出错,位置3");//数据不够
 }
 template<typename InputIterator>
 InputIterator BerTLV::ParseTLV(InputIterator beg, InputIterator end, BerTLV & tlv)
@@ -414,7 +414,7 @@ InputIterator BerTLV::ParseTLV(InputIterator beg, InputIterator end, BerTLV & tl
         {
             if (beg == end)
             {
-                throw std::invalid_argument("ParseTLV 出错，位置1");//数据不够
+                throw std::invalid_argument(ERR_WHERE "ParseTLV 出错，位置1");//数据不够
             }
             tlv.value_.push_back(static_cast<unsigned char>(*beg++));
         }
@@ -443,7 +443,7 @@ InputIterator BerTLV::ParseTLVList(InputIterator beg, InputIterator end, size_t 
     }
     else
     {
-        throw std::invalid_argument("ParseTLVList 出错");//children 长度与 len不一致。
+        throw std::invalid_argument(ERR_WHERE "ParseTLVList 出错");//children 长度与 len不一致。
     }
 }
 

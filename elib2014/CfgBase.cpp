@@ -252,7 +252,7 @@ void XMLCfgFile::Load(const char *file_name)
 {
     impl_->Load(file_name);
 }
-void XMLCfgFile::Save()
+void XMLCfgFile::Save()const
 {
     impl_->Save();
 }
@@ -274,12 +274,12 @@ void XMLCfgFile::Del(const char *path, const char *value)
     impl_->Del(path, value);
 }
 template<>
-const char*  XMLCfgFile::Get(const char *path)
+const char*  XMLCfgFile::Get(const char *path)const
 {
     return impl_->Get(path);
 }
 template<>
-std::vector<const char *> XMLCfgFile::GetList(const char *path)
+std::vector<const char *> XMLCfgFile::GetList(const char *path)const
 {
     return impl_->GetList(path);
 }
@@ -361,12 +361,12 @@ void XMLCfgFile::Del(const char *path, T value)
     impl_->Del(path, to_string(value).c_str());
 }
 template<class T>
-T XMLCfgFile::Get(const char *path)
+T XMLCfgFile::Get(const char *path)const
 {
     return stoT<T>(impl_->Get(path));
 }
 template<class T>
-vector<T> XMLCfgFile::GetList(const char *path)
+vector<T> XMLCfgFile::GetList(const char *path)const
 {
     auto vec = impl_->GetList(path);
     vector<T> ret;
@@ -387,10 +387,10 @@ void XMLCfgFile::Set(const char *path, T old_value, T new_value)
     impl_->Set(path, to_string(old_value).c_str(), to_string(new_value).c_str());
 }
 template<class T>
-void XMLCfgFile::Set(const char *path, vector<T> &vec)
+void XMLCfgFile::Set(const char *path, const vector<T> &vec)
 {
     vector<string> tmp1;
-    for (auto &x : vec)
+    for (const auto &x : vec)
     {
         tmp1.push_back(to_string(x));
     }
@@ -408,15 +408,15 @@ void XMLCfgFile::Set(const char *path, vector<T> &vec)
     template\
     void XMLCfgFile::Del(const char *path, T);\
     template\
-    T XMLCfgFile::Get(const char *path);\
+    T XMLCfgFile::Get(const char *path)const;\
     template\
-    std::vector<T> XMLCfgFile::GetList(const char *path);\
+    std::vector<T> XMLCfgFile::GetList(const char *path)const;\
     template\
     void XMLCfgFile::Set(const char *path, T);\
     template\
     void XMLCfgFile::Set(const char *path, T old_value, T new_value);\
     template\
-    void XMLCfgFile::Set(const char *path, std::vector<T> &);
+    void XMLCfgFile::Set(const char *path, const std::vector<T> &);
 
 DEFINE_IMPL(short)
 DEFINE_IMPL(int)

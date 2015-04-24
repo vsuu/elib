@@ -288,7 +288,7 @@ void BerTLV::AppendChild(const BerTLV& tlv)
     }
     else
     {
-        throw logic_error("叶子结点不能AppendChild");
+        throw logic_error(ERR_WHERE "叶子结点不能AppendChild");
     }
 }
 void BerTLV::AppendChild(BerTLV&& tlv)
@@ -299,7 +299,7 @@ void BerTLV::AppendChild(BerTLV&& tlv)
     }
     else
     {
-        throw logic_error("叶子结点不能AppendChild");
+        throw logic_error("ERR_WHERE 叶子结点不能AppendChild");
     }
 }
 bool BerTLV::InsertChild(TagType tag, const BerTLV &tlv)
