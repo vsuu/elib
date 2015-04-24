@@ -4,7 +4,6 @@
 #include <cstdint>
 #include <vector>
 #include <stdexcept>
-#include <bitset>
 #include <istream>
 #include <ostream>
 #include <iterator>
@@ -51,11 +50,11 @@ public:
     {
         if (!IsStruct())
         {
-            value_.assign(data.Data(), data.Data() + data.ByteLen());
+            value_.assign(data.begin(), data.end());
         }
         else
         {
-            ParseTLVList(data.Data(), data.Data() + data.ByteLen(), data.ByteLen(), children_);
+            ParseTLVList(data.begin(), data.end(), data.size(), children_);
         }
     }
 
@@ -96,7 +95,7 @@ public:
     void GetValue(BinData &data)
     {
         assert(!IsStruct());
-        data.Reset(value_.data(), value_.size());
+        data.assign(value_.begin(), value_.end());
     }
     void GetValue(BerTLVList &list)
     {

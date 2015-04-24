@@ -7,13 +7,11 @@ __LIB_NAME_SPACE_BEGIN__
 BinData HexData::ToBin()const
 {
     BinData ret;
-    Hex2Bin(data_.data(), back_inserter(ret.data_));
+    Hex2Bin(data(), back_inserter(ret));
     return ret;
 }
 HexData BinData::ToHex()const
 {
-    HexData ret;
-    ret.data_ = Bin2Hex(data_.data(), data_.size());
-    return ret;
+    return HexData(Bin2Hex(data(), size()));
 }
 __LIB_NAME_SPACE_END__

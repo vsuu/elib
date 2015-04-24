@@ -174,7 +174,7 @@ size_t BerTLV::TLVLen(const BerTLV &tlv)
 
 BerTLV::BerTLV(const BinData &data)
 {
-    ParseTLV(data.Data(), data.Data() + data.ByteLen(), *this);
+    ParseTLV(data.begin(), data.end(), *this);
 }
 
 BerTLV &BerTLV::operator=(BerTLV && other)
@@ -192,12 +192,12 @@ void BerTLV::SetValue(const BinData &data)
 {
     if (!IsStruct())
     {
-        value_.assign(data.Data(), data.Data() + data.ByteLen());
+        value_.assign(data.begin(), data.end());
     }
     else
     {
         children_.clear();
-        ParseTLVList(data.Data(), data.Data() + data.ByteLen(), data.ByteLen(), children_);
+        ParseTLVList(data.begin(), data.end(), data.size(), children_);
     }
 }
 //void BerTLV::SetValue(BinData &&data)

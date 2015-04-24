@@ -40,10 +40,10 @@ void TestBerTLV()
         ptr->AppendChild(BerTLV(0x9F4D, HexData("0B0A").ToBin()));
         tlv.InsertChild(0x9F4D, BerTLV(HexData("95051122334455").ToBin()));
 
-        vector<unsigned char> out_buf;
+        BinData out_buf;
         BerTLV::EncapTLV(tlv, back_inserter(out_buf));
 
-        cout << BinData(out_buf.data(), out_buf.size()).ToHex().Data() << endl;
+        cout << out_buf.ToHex().c_str() << endl;
 
         BerTLV tlv2;
         BerTLV::ParseTLV(begin(out_buf), end(out_buf), tlv2);
@@ -54,6 +54,9 @@ void TestBerTLV()
 
         tlv2.Clear();
         BerTLV::ParseTLV(ss, tlv2);
+        out_buf.clear();
+        tlv2.EncapTLV(back_inserter(out_buf));
+        cout << out_buf.ToHex().c_str() << endl;
     }
     catch (const exception &e)
     {

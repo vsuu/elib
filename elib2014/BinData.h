@@ -9,43 +9,36 @@
 __LIB_NAME_SPACE_BEGIN__
 
 class HexData;
-class BinData
+class BinData :public std::vector < unsigned char >
 {
+    //using std::vector<unsigned char>::vector;//vs2013 not support
     typedef BinData self;
 public:
     BinData() = default;
-    BinData(const unsigned char *data, int len) :data_(data, data + len)
-    {}
-    BinData(const BinData &other) :data_(other.data_)
-    {}
-    BinData(BinData &&other) :data_(std::move(other.data_))
-    {}
-    void Reset(const unsigned char *data, int len)
+    ~BinData() = default;
+    BinData(const BinData &o) :std::vector<unsigned char>::vector(o)
     {
-        data_.assign(data, data + len);
     }
-    void Clear()
+    BinData(BinData &&o) : std::vector<unsigned char>::vector(std::move(o))
     {
-        data_.clear();
     }
-    const unsigned char *Data()const
+    self &operator=(const BinData &o)
     {
-        return data_.data();
-    }
-    size_t ByteLen()const
-    {
-        return data_.size();
-    }
-    self & operator=(const self &o)
-    {
-        data_ = o.data_;
+        std::vector<unsigned char>::operator=(o);
         return *this;
     }
-    self & operator=(self &&o)
+    self &operator=(BinData &&o)
     {
-        data_ = std::move(o.data_);
+        std::vector<unsigned char>::operator=(std::move(o));
         return *this;
     }
+    template <class InputIterator>
+    BinData(InputIterator first, InputIterator last) :std::vector<unsigned char>::vector(first, last)
+    {
+    }
+    BinData(size_t n) :std::vector<unsigned char>::vector(n)
+    {}
+
     self operator+(const self &o)const
     {
         self ret(*this);
@@ -53,67 +46,45 @@ public:
     }
     self &operator+=(const self &o)
     {
-        data_.insert(data_.end(), o.data_.begin(), o.data_.end());
+        insert(end(), o.begin(), o.end());
         return *this;
     }
     HexData ToHex()const;
-
-    friend class HexData;
-private:
-    std::vector < unsigned char > data_;
 };
 
-class HexData
+class HexData : public std::string
 {
     typedef HexData self;
+    //using std::string::basic_string;   vs2013 not support
 public:
     HexData() = default;
-    explicit HexData(char *str) :data_(str)
+    ~HexData() = default;
+    HexData(const HexData &o) :std::string::basic_string(o)
     {}
-    HexData(const HexData &o) :data_(o.data_)
+    HexData(HexData &&o) :std::string::basic_string(std::move(o))
     {}
-    HexData(HexData &&o) :data_(std::move(o.data_))
-    {}
-    void Reset(const char *str)
-    {
-        data_.assign(str);
-    }
-    void Clear()
-    {
-        data_.clear();
-    }
-    const char * Data()const
-    {
-        return data_.data();
-    }
-    size_t ByteLen()const
-    {
-        return data_.size() >> 1;
-    }
     self & operator=(const self &o)
     {
-        data_ = o.data_;
+        std::string::operator=(o);
         return *this;
     }
-    self & operator=(self &&o)
+
+    self & operator=(const self &&o)
     {
-        data_ = std::move(o.data_);
+        std::string::operator=(std::move(o));
         return *this;
     }
-    self operator+(const self &o)const
-    {
-        self ret(*this);
-        return ret += o;
-    }
-    self& operator+=(const self &o)
-    {
-        data_ += o.data_;
-        return *this;
-    }
+    HexData(const std::string& str) :std::string::basic_string(str)
+    {}
+    HexData(const char* s) :std::string::basic_string(s)
+    {}
+    template <class InputIterator>
+    HexData(InputIterator first, InputIterator last) : std::string::basic_string(first, last)
+    {}
+    HexData(std::string&& str) : std::string::basic_string(std::move(str))
+    {}
+
     BinData ToBin()const;
-    friend class BinData;
-private:
-    std::string data_;
 };
 
 __LIB_NAME_SPACE_END__
