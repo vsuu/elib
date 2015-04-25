@@ -98,9 +98,6 @@
     <ClCompile Include="CfgBase.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="BinData.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="BerTLV.cpp">
       <Filter>源文件</Filter>
     </ClCompile>

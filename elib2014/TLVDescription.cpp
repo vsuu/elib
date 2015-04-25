@@ -2,7 +2,7 @@
 #include "rapidxml\rapidxml.hpp"
 #include "rapidxml\rapidxml_utils.hpp"
 #include <sstream>
-#include "strop.h"
+#include "BinData.h"
 #include <memory>
 #include <Python.h>
 #include "OnScopeExit.h"
@@ -262,7 +262,8 @@ const std::string TLVDescription::GetTagInfo(int tag, const std::string &value, 
         {
             break;// throw DataParseException(_T("python 导入函数失败"));
         }
-        pRet = PyEval_CallFunction(pFun, "(s)", elib::Bin2Hex(value.data(), value.size()).c_str());
+
+        pRet = PyEval_CallFunction(pFun, "(s)", elib::Bin2Hex(begin(value), end(value)).c_str());
         if (NULL == pRet)
         {
             break;// throw DataParseException(_T("返回值为NULL"));

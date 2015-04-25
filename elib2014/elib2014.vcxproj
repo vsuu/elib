@@ -116,7 +116,6 @@
   <ItemGroup>
     <ClCompile Include="BerTLV.cpp" />
     <ClCompile Include="BerTLVInterpreter.cpp" />
-    <ClCompile Include="BinData.cpp" />
     <ClCompile Include="CfgBase.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="strop.cc" />

@@ -6,6 +6,7 @@
 #include <cstdio>
 #include <type_traits>
 #include <algorithm>
+#include <Windows.h>
 
 using namespace std;
 
@@ -122,7 +123,7 @@ void LogFile::WriteLog(LogType t, const char *s, size_t)
 FILE *LogFile::CreateLogFile(const char *Path, const char *FileBaseName)
 {
     std::stringstream ss;
-    ss << Path << FileBaseName << '_' << this_thread::get_id() << '_';
+    ss << Path << FileBaseName << '_' << ::GetCurrentProcessId() << '_';
     time_t t = time(0);
     struct tm*		pstTM = 0;
     pstTM = localtime(&t);

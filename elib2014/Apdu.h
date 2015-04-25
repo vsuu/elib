@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <cassert>
+#include <iterator>
 __LIB_NAME_SPACE_BEGIN__
 
 class ApduCmd
@@ -82,7 +83,7 @@ public:
     BinData ToBin()const
     {
         BinData ret;
-        EncapApdu(*this, back_inserter(ret));
+        EncapApdu(*this, std::back_inserter(ret));
         return ret;
     }
     int &Le() //-1表示没有le

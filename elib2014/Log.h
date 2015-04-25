@@ -103,7 +103,6 @@ public:
     }
     friend class detail::LogStream;
 private:
-
     void BufferIn(LogType, std::string);
     std::vector < std::unique_ptr<LogFileBase> > logfiles_;
     std::vector < std::tuple<LogType, std::string>> buffer_;

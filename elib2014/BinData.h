@@ -5,6 +5,7 @@
 #include <string>
 
 #include "libbase.h"
+#include "strop.h"
 
 __LIB_NAME_SPACE_BEGIN__
 
@@ -84,8 +85,39 @@ public:
     HexData(std::string&& str) : std::string::basic_string(std::move(str))
     {}
 
-    BinData ToBin()const;
+    BinData ToBin()const
+    {
+        BinData ret;
+        Hex2Bin(*this, std::back_inserter(ret));
+        return ret;
+    }
 };
+//
+inline BinData Hex2Bin(const char *s)
+{
+    BinData ret;
+    Hex2Bin(s, std::back_inserter(ret));
+    return ret;
+}
+inline BinData Hex2Bin(const std::string &s)
+{
+    return Hex2Bin(s.c_str());
+}
+
+template<typename InputIterator>
+inline HexData Bin2Hex(InputIterator b, InputIterator e)
+{
+    HexData ret;
+    Bin2Hex(b, e, std::back_inserter(ret));
+    return ret;
+}
+
+inline HexData BinData::ToHex()const
+{
+    HexData ret;
+    Bin2Hex(begin(), end(), std::back_inserter(ret));
+    return ret;
+}
 
 __LIB_NAME_SPACE_END__
 

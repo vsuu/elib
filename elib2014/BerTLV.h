@@ -9,6 +9,7 @@
 #include <iterator>
 #include <algorithm>
 #include <cassert>
+#include <iostream>
 
 #include "BerTLVInterpreter.h"
 
@@ -219,27 +220,23 @@ public:
 
     static std::istream & ParseTag(std::istream &is, TagType & tag)
     {
-        assert((is.flags()&std::ios_base::skipws) == 0);
-        ParseTag(std::istream_iterator<unsigned char>(is), std::istream_iterator<unsigned char>(), tag);
+        ParseTag(std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>(), tag);
         return is;
     }
 
     static std::istream & ParseLen(std::istream &is, uint32_t & len)
     {
-        assert((is.flags()&std::ios_base::skipws) == 0);
-        ParseLen(std::istream_iterator<unsigned char>(is), std::istream_iterator<unsigned char>(), len);
+        ParseLen(std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>(), len);
         return is;
     }
     static std::istream & ParseTLV(std::istream &is, BerTLV &tlv)
     {
-        assert((is.flags()&std::ios_base::skipws) == 0);
-        ParseTLV(std::istream_iterator<unsigned char>(is), std::istream_iterator<unsigned char>(), tlv);
+        ParseTLV(std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>(), tlv);
         return is;
     }
     static std::istream & ParseTLVList(std::istream &is, size_t len, BerTLVList & tlv_list)
     {
-        assert((is.flags()&std::ios_base::skipws) == 0);
-        ParseTLVList(std::istream_iterator<unsigned char>(is), std::istream_iterator<unsigned char>(), len, tlv_list);
+        ParseTLVList(std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>(), len, tlv_list);
         return is;
     }
 
@@ -262,28 +259,28 @@ public:
 
     static std::ostream& EncapTag(TagType tag, std::ostream& os)
     {
-        EncapTag(tag, std::ostream_iterator<unsigned char>(os));
+        EncapTag(tag, std::ostreambuf_iterator<char>(os));
         return os;
     }
     static std::ostream& EncapLen(uint32_t len, std::ostream& os)
     {
-        EncapLen(len, std::ostream_iterator<unsigned char>(os));
+        EncapLen(len, std::ostreambuf_iterator<char>(os));
         return os;
     }
 
     static std::ostream& EncapValue(const BerTLV &tlv, std::ostream& os)
     {
-        EncapValue(tlv, std::ostream_iterator<unsigned char>(os));
+        EncapValue(tlv, std::ostreambuf_iterator<char>(os));
         return os;
     }
     static std::ostream& EncapTLV(const BerTLV &tlv, std::ostream& os)
     {
-        EncapTLV(tlv, std::ostream_iterator<unsigned char>(os));
+        EncapTLV(tlv, std::ostreambuf_iterator<char>(os));
         return os;
     }
     static std::ostream& EncapTLVList(const BerTLVList &tlv_list, std::ostream& os)
     {
-        EncapTLVList(tlv_list, std::ostream_iterator<unsigned char>(os));
+        EncapTLVList(tlv_list, std::ostreambuf_iterator<char>(os));
         return os;
     }
 
@@ -336,7 +333,7 @@ static InputIterator BerTLV::ParseTag(InputIterator beg, InputIterator end, TagT
     {
         throw std::invalid_argument(ERR_WHERE "ParseTag ³ö´í£¬ÊäÈëÎª¿Õ");
     }
-    tag = *beg++;
+    tag = static_cast<unsigned char>(*beg++);
     if ((tag & 0x1F) != 0x1F)
     {
         return beg;

@@ -8,8 +8,13 @@
 
 __LIB_NAME_SPACE_BEGIN__
 
-
-int char2hex(char c, unsigned char&r);
+extern unsigned char char2hex_table[];
+//int char2hex(char c, unsigned char&r);
+inline bool char2hex(char c, unsigned char&r)
+{
+    r = char2hex_table[c];
+    return r == 0xFF;
+}
 
 extern char hex2char_table[];
 
@@ -19,68 +24,42 @@ inline char hex2char(unsigned char c)
 }
 
 template<typename OutputIter>
-int Hex2Bin(const char *str,OutputIter out)
+OutputIter Hex2Bin(const char *str, OutputIter out)
 {
-    if(nullptr==str)return 0;
+    if (nullptr == str)return out;
 
-    const char *beg_it=str;
-    unsigned char tmp1,tmp2;
+    const char *beg_it = str;
+    unsigned char tmp1, tmp2;
 
     do
     {
-        if(char2hex(*beg_it,tmp1) || char2hex(*(beg_it+1),tmp2))
+        if (char2hex(*beg_it++, tmp1) || char2hex(*beg_it++, tmp2))
         {
             break;
         }
-        *out++=(tmp1<<4)|tmp2;
-		beg_it += 2;
-    }
-    while(true);
+        *out++ = (tmp1 << 4) | tmp2;
+    } while (true);
 
-    return (beg_it - str)/2;
+    return out;
 }
 
 template<typename OutputIter>
-inline int Hex2Bin(const std::string &str,OutputIter out)
+inline OutputIter Hex2Bin(const std::string &str, OutputIter out)
 {
-    return Hex2Bin(str.c_str(),out);
+    return Hex2Bin(str.c_str(), out);
 }
 
-inline std::string Hex2Bin(const std::string &str)
+template<typename InputIer, typename OutputIter>
+OutputIter Bin2Hex(InputIer b, InputIer e, OutputIter out)
 {
-    std::string ret;
-    Hex2Bin(str,std::back_inserter(ret));
-    return ret;
-}
-
-template<typename OutputIter>
-int Bin2Hex(const void *b,const void *e,OutputIter out)
-{
-    if(nullptr==b || nullptr==e) return 0;
-    const unsigned char *begp=static_cast<const unsigned char *>(b);
-    const unsigned char *endp=static_cast<const unsigned char *>(e);
-    while(begp!=endp)
+    unsigned char c;
+    while (b != e)
     {
-        *out++=hex2char(*begp>>4);
-        *out++=hex2char(*begp&0x0F);
-		++begp;
+        c = *b++;
+        *out++ = hex2char(c >> 4);
+        *out++ = hex2char(c & 0x0F);
     }
-    return (endp-static_cast<const unsigned char *>(b))*2;
-}
-template<typename OutputIter>
-inline int Bin2Hex(const void *b,const unsigned int l,OutputIter out)
-{
-    return Bin2Hex(b,(const unsigned char *)b+l,out);
-}
-inline std::string Bin2Hex(const void *b,const void *e)
-{
-    std::string ret;
-    Bin2Hex(b,e,std::back_inserter(ret));
-    return ret;
-}
-inline std::string Bin2Hex(const void *b,unsigned int l)
-{
-    return Bin2Hex(b,static_cast<const char *>(b)+l);
+    return out;
 }
 
 //std::string wstr2str(const wchar_t *);
@@ -89,16 +68,6 @@ std::string wstr2str(const std::wstring& wstr);
 //std::wstring str2wstr(const char *);
 std::wstring str2wstr(const std::string &str);
 
-
 __LIB_NAME_SPACE_END__
-
-
-
-
-
-
-
-
-
 
 #endif // _STROP_H_RFT

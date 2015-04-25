@@ -89,13 +89,13 @@ __LIB_NAME_SPACE_BEGIN__
 //}
 
 template
-std::istream_iterator<unsigned char> BerTLV::ParseTag(std::istream_iterator<unsigned char> beg, std::istream_iterator<unsigned char> end, TagType &);
+std::istreambuf_iterator<char> BerTLV::ParseTag(std::istreambuf_iterator<char> beg, std::istreambuf_iterator<char> end, TagType &);
 template
-std::istream_iterator<unsigned char> BerTLV::ParseLen(std::istream_iterator<unsigned char> beg, std::istream_iterator<unsigned char> end, uint32_t &);
+std::istreambuf_iterator<char> BerTLV::ParseLen(std::istreambuf_iterator<char> beg, std::istreambuf_iterator<char> end, uint32_t &);
 template
-std::istream_iterator<unsigned char> BerTLV::ParseTLV(std::istream_iterator<unsigned char> beg, std::istream_iterator<unsigned char> end, BerTLV &);
+std::istreambuf_iterator<char> BerTLV::ParseTLV(std::istreambuf_iterator<char> beg, std::istreambuf_iterator<char> end, BerTLV &);
 template
-std::istream_iterator<unsigned char> BerTLV::ParseTLVList(std::istream_iterator<unsigned char> beg, std::istream_iterator<unsigned char> end, size_t len, BerTLVList &);
+std::istreambuf_iterator<char> BerTLV::ParseTLVList(std::istreambuf_iterator<char> beg, std::istreambuf_iterator<char> end, size_t len, BerTLVList &);
 
 template
 std::istream_iterator< char> BerTLV::ParseTag(std::istream_iterator< char> beg, std::istream_iterator< char> end, TagType &);

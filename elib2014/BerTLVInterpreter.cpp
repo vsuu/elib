@@ -5,6 +5,7 @@
 #include "BerTLV.h"
 #include "TLVDescription.h"
 #include "strop.h"
+#include "BinData.h"
 using std::string;
 using std::back_inserter;
 
@@ -22,9 +23,9 @@ public:
     //获取本TLV数据表示的信息
     std::string GetMeaning(const BerTLV &tlv)const
     {
-        string tmp;
+        BinData tmp;
         tlv.EncapValue(back_inserter(tmp));
-        return TLVDescription::GetTagInfo(static_cast<int>(tlv.Tag()), elib::Bin2Hex(tmp.data(), tmp.size()), s_);
+        return TLVDescription::GetTagInfo(static_cast<int>(tlv.Tag()), tmp.ToHex().c_str(), s_);
     }
 private:
     STANDARD s_;
