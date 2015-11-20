@@ -31,30 +31,94 @@ char hex2char_table[] = "0123456789ABCDEF";
 
 std::string wstr2str(const std::wstring& ws)
 {
-    std::string curLocale = setlocale(LC_ALL, NULL);
-    setlocale(LC_ALL, "chs");
-    const wchar_t* _Source = ws.c_str();
-    size_t _Dsize = 2 * ws.size() + 1;
-    char *_Dest = new char[_Dsize];
-    memset(_Dest, 0, _Dsize);
-    wcstombs(_Dest, _Source, _Dsize);
-    std::string result = _Dest;
-    delete[]_Dest;
-    setlocale(LC_ALL, curLocale.c_str());
-    return result;
+	std::string curLocale = setlocale(LC_ALL, NULL);
+	setlocale(LC_ALL, "chs");
+	const wchar_t* _Source = ws.c_str();
+	size_t _Dsize = 2 * ws.size();
+	char *_Dest = new char[_Dsize];
+	memset(_Dest, 0, _Dsize);
+	
+	size_t count=0;
+	size_t pos = 0;
+	while (pos<ws.size())
+	{
+		count+=wcstombs(_Dest+count, _Source+pos, _Dsize-count);
+		pos = ws.find(L'\0',pos);
+		if (pos == std::wstring::npos)
+		{
+			break;
+		}
+		else
+		{
+			count++;
+			pos ++;
+		}
+	};
+	
+	std::string result(_Dest,count);
+	delete[]_Dest;
+	setlocale(LC_ALL, curLocale.c_str());
+	return result;
 }
 std::wstring str2wstr(const std::string &s)
 {
-    setlocale(LC_ALL, "chs");
-    const char* _Source = s.c_str();
-    size_t _Dsize = s.size() + 1;
-    wchar_t *_Dest = new wchar_t[_Dsize];
-    wmemset(_Dest, 0, _Dsize);
-    mbstowcs(_Dest, _Source, _Dsize);
-    std::wstring result = _Dest;
-    delete[]_Dest;
-    setlocale(LC_ALL, "C");
-    return result;
+	setlocale(LC_ALL, "chs");
+	const char* _Source = s.c_str();
+	size_t _Dsize = s.size() + 1;
+	wchar_t *_Dest = new wchar_t[_Dsize];
+	wmemset(_Dest, 0, _Dsize);
+	size_t count = 0;
+	size_t pos = 0;
+	while (pos<s.size())
+	{
+		count+=mbstowcs(_Dest+count, _Source+pos, _Dsize-count);
+		pos = s.find('\0', pos);
+		if (pos == std::string::npos)
+		{
+			break;
+		}
+		else
+		{
+			count++;
+			pos++;
+		}
+	}
+	std::wstring result(_Dest,count);
+	delete[]_Dest;
+	setlocale(LC_ALL, "C");
+	return result;
 }
+
+using std::tuple;
+using std::string;
+tuple<string, string, string> ParseFileName(const string &filename)
+{
+	string path, name, suffix;
+	path = filename;
+	TrimLeft(path, " ");
+	TrimRight(path, "\\/ ");
+	//parse path;
+	auto pos = path.find_last_of("\\/");
+	if (pos != string::npos)
+	{
+		name = path.substr(pos + 1);
+		path.erase(pos + 1);
+	}
+	else
+	{
+		name = path;
+		path.clear();
+	}
+
+	pos = name.rfind('.');
+	if (pos != string::npos)
+	{
+		suffix = name.substr(pos + 1);
+		name.erase(pos);
+	}
+
+	return make_tuple(std::move(path), std::move(name), std::move(suffix));
+}
+
 
 __LIB_NAME_SPACE_END__

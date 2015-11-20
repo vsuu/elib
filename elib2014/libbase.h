@@ -7,6 +7,8 @@
 
 #define ELIB_STRINGLINE(x) #x
 #define ELIB_LINETOSTRING(x) ELIB_STRINGLINE(x)
-#define ERR_WHERE  "error at " __FILE__  ", line " ELIB_LINETOSTRING(__LINE__) ":"
+#define ERR_WHERE  "error at " __FILE__  ", line " ELIB_LINETOSTRING(__LINE__) " : "
+
+#define elif else if
 
 #endif // _LIB_BASE_H_RFT

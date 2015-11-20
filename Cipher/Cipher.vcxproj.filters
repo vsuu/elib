@@ -18,30 +18,54 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="DigestCalc.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
+    <ClInclude Include="SM3.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CipherCalc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="EVP_SM4.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="sm4.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="InitOpenSSL.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RsaCalc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SM2Op.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="DigestCalc.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="unittest.cpp">
+    <ClCompile Include="SM3.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CfgTest.cpp">
+    <ClCompile Include="CipherCalc.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="BerTLVTest.cpp">
+    <ClCompile Include="EVP_SM4.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ApduTest.cpp">
+    <ClCompile Include="sm4.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="PCSCTest.cpp">
+    <ClCompile Include="InitOpenSSL.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RsaCalc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SM2Op.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

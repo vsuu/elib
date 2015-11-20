@@ -95,7 +95,7 @@ std::istreambuf_iterator<char> BerTLV::ParseLen(std::istreambuf_iterator<char> b
 template
 std::istreambuf_iterator<char> BerTLV::ParseTLV(std::istreambuf_iterator<char> beg, std::istreambuf_iterator<char> end, BerTLV &);
 template
-std::istreambuf_iterator<char> BerTLV::ParseTLVList(std::istreambuf_iterator<char> beg, std::istreambuf_iterator<char> end, size_t len, BerTLVList &);
+std::istreambuf_iterator<char> BerTLVList::ParseTLVList(std::istreambuf_iterator<char> beg, std::istreambuf_iterator<char> end, size_t len, BerTLVList &);
 
 template
 std::istream_iterator< char> BerTLV::ParseTag(std::istream_iterator< char> beg, std::istream_iterator< char> end, TagType &);
@@ -104,7 +104,7 @@ std::istream_iterator< char> BerTLV::ParseLen(std::istream_iterator< char> beg, 
 template
 std::istream_iterator< char> BerTLV::ParseTLV(std::istream_iterator< char> beg, std::istream_iterator< char> end, BerTLV &);
 template
-std::istream_iterator< char> BerTLV::ParseTLVList(std::istream_iterator< char> beg, std::istream_iterator< char> end, size_t len, BerTLVList &);
+std::istream_iterator< char> BerTLVList::ParseTLVList(std::istream_iterator< char> beg, std::istream_iterator< char> end, size_t len, BerTLVList &);
 
 template
 const unsigned char * BerTLV::ParseTag(const unsigned char * beg, const unsigned char * end, TagType &);
@@ -113,7 +113,7 @@ const unsigned char * BerTLV::ParseLen(const unsigned char * beg, const unsigned
 template
 const unsigned char * BerTLV::ParseTLV(const unsigned char * beg, const unsigned char * end, BerTLV &);
 template
-const unsigned char * BerTLV::ParseTLVList(const unsigned char * beg, const unsigned char * end, size_t len, BerTLVList &);
+const unsigned char * BerTLVList::ParseTLVList(const unsigned char * beg, const unsigned char * end, size_t len, BerTLVList &);
 //template
 //const unsigned char * BerTLV::ParseTLVList(const unsigned char * beg, const unsigned char* end, BerTLVList & tlv_list);
 
@@ -124,81 +124,75 @@ const   char * BerTLV::ParseLen(const   char * beg, const   char * end, uint32_t
 template
 const   char * BerTLV::ParseTLV(const   char * beg, const   char * end, BerTLV &);
 template
-const   char * BerTLV::ParseTLVList(const   char * beg, const   char * end, size_t len, BerTLVList &);
+const   char * BerTLVList::ParseTLVList(const   char * beg, const   char * end, size_t len, BerTLVList &);
 /*template
 const   char * BerTLV::ParseTLVList(const   char * beg, const   char* end, BerTLVList & tlv_list)*/;
 
-size_t BerTLV::TLen(TagType tag)
-{
-    if (tag > 0xFF)return 2;
-    return 1;
-}
 size_t BerTLV::LLen(uint32_t vlen)
 {
-    if (vlen < 0x80)
-    {
-        return 1;
-    }
-    else
-    {
-        size_t ret = 1;
-        while (vlen > 0)
-        {
-            ret++;
-            vlen >>= 8;
-        }
-        return ret;
-    }
+	if (vlen < 0x80)
+	{
+		return 1;
+	}
+	else
+	{
+		size_t ret = 1;
+		while (vlen > 0)
+		{
+			ret++;
+			vlen >>= 8;
+		}
+		return ret;
+	}
 }
 size_t BerTLV::VLen(const BerTLV &tlv)
 {
-    if (!tlv.IsStruct())
-    {
-        return tlv.value_.size();
-    }
-    else
-    {
-        size_t ret = 0;
-        for (auto &x : tlv.children_)
-        {
-            ret += x.Len();
-        }
-        return ret;
-    }
-}
-size_t BerTLV::TLVLen(const BerTLV &tlv)
-{
-    size_t vlen = VLen(tlv);
-    return TLen(tlv.tag_) + LLen(vlen) + vlen;
+	if (!tlv.IsStruct())
+	{
+		return tlv.value_.size();
+	}
+	else
+	{
+		return tlv.children_.Len();
+	}
 }
 
-BerTLV::BerTLV(const BinData &data)
-{
-    ParseTLV(data.begin(), data.end(), *this);
-}
-
-BerTLV &BerTLV::operator=(BerTLV && other)
-{
-    if (this != &other)
-    {
-        tag_ = std::move(other.tag_);
-        value_ = std::move(other.value_);
-        children_ = std::move(other.children_);
-    }
-    return *this;
-}
+//
+//BerTLV &BerTLV::operator=(BerTLV && other)
+//{
+//    if (this != &other)
+//    {
+//        tag_ = std::move(other.tag_);
+//        value_ = std::move(other.value_);
+//        children_ = std::move(other.children_);
+//    }
+//    return *this;
+//}
 
 void BerTLV::SetValue(const BinData &data)
 {
-    if (!IsStruct())
-    {
-        value_.assign(data.begin(), data.end());
-    }
-    else
-    {
-        children_.clear();
-        ParseTLVList(data.begin(), data.end(), data.size(), children_);
-    }
+	if (!IsStruct())
+	{
+		value_.assign(data.begin(), data.end());
+	}
+	else
+	{
+		children_.Clear();
+		BerTLVList::ParseTLVList(data.begin(), data.end(), data.size(), children_);
+	}
+}
+
+void BerTLV::SetValue(BinData &&data)
+{
+	if (!IsStruct())
+	{
+		value_ = std::move(data);
+	}
+	else
+	{
+		children_.Clear();
+		BerTLVList::ParseTLVList(data.begin(), data.end(), data.size(), children_);
+	}
 }
 //void BerTLV::SetValue(BinData &&data)
 //{
@@ -233,115 +227,119 @@ void BerTLV::SetValue(const BinData &data)
 //        throw logic_error("叶子结点不能SetChildren");
 //    }
 //}
-BerTLV* BerTLV::FindChild(TagType tag)
+
+BerTLV *BerTLVList::Child(TagType tag)
 {
-    BerTLV *ret = nullptr;
-    if (IsStruct())
-    {
-        for (auto &x : children_)
-        {
-            if (x.tag_ == tag)
-            {
-                return &x;
-            }
-            if ((ret = x.FindChild(tag)) != nullptr)
-            {
-                return ret;
-            }
-        }
-        return nullptr;
-    }
-    else
-    {
-        return nullptr;
-    }
+	for (auto &x : *this)
+	{
+		if (x.Tag() == tag)
+		{
+			return &x;
+		}
+	}
+
+	return nullptr;
 }
-const BerTLV * BerTLV::FindChild(TagType tag)const
+const BerTLV *BerTLVList::Child(TagType tag)const
 {
-    auto ret = const_cast<BerTLV *>(this)->FindChild(tag);
-    return const_cast<const BerTLV *>(ret);
+	return const_cast<BerTLVList *>(this)->Child(tag);
 }
-bool BerTLV::DeleteChild(TagType tag)
+
+BerTLV* BerTLVList::Find(TagType tag)
 {
-    if (IsStruct())
-    {
-        for (auto it = children_.begin(); it != children_.end(); ++it)
-        {
-            if (it->tag_ == tag)
-            {
-                children_.erase(it);
-                return true;
-            }
-            if (it->DeleteChild(tag))
-            {
-                return true;
-            }
-        }
-    }
-    return false;
+	BerTLV *ret = nullptr;
+
+	for (auto &x : *this)
+	{
+		if (x.Tag() == tag)
+		{
+			return &x;
+		}
+		if ((ret = x.Find(tag)) != nullptr)
+		{
+			return ret;
+		}
+	}
+
+	return nullptr;
 }
-void BerTLV::AppendChild(const BerTLV& tlv)
+const BerTLV * BerTLVList::Find(TagType tag)const
 {
-    if (IsStruct())
-    {
-        children_.push_back(tlv);
-    }
-    else
-    {
-        throw logic_error(ERR_WHERE "叶子结点不能AppendChild");
-    }
+	return const_cast<BerTLVList *>(this)->Find(tag);
 }
-void BerTLV::AppendChild(BerTLV&& tlv)
+bool BerTLVList::DeleteChild(TagType tag)
 {
-    if (IsStruct())
-    {
-        children_.push_back(std::move(tlv));
-    }
-    else
-    {
-        throw logic_error("ERR_WHERE 叶子结点不能AppendChild");
-    }
+	for (auto it = begin(); it != end(); ++it)
+	{
+		if (it->Tag() == tag)
+		{
+			erase(it);
+			return true;
+		}
+		if (it->DeleteChild(tag))
+		{
+			return true;
+		}
+	}
+	return false;
 }
-bool BerTLV::InsertChild(TagType tag, const BerTLV &tlv)
+
+bool BerTLVList::InsertChild(TagType tag, const BerTLV &tlv)
 {
-    if (IsStruct())
-    {
-        for (auto it = children_.begin(); it != children_.end(); ++it)
-        {
-            if (it->tag_ == tag)
-            {
-                ++it;
-                children_.insert(it, tlv);
-                return true;
-            }
-            if (it->InsertChild(tag, tlv))
-            {
-                return true;
-            }
-        }
-    }
-    return false;
+	for (auto it = begin(); it != end(); ++it)
+	{
+		if (it->Tag() == tag)
+		{
+			++it;
+			insert(it, tlv);
+			return true;
+		}
+		if (it->InsertChild(tag, tlv))
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
-bool BerTLV::InsertChild(TagType tag, BerTLV &&tlv)
+bool BerTLVList::InsertChild(TagType tag, BerTLV &&tlv)
 {
-    if (IsStruct())
-    {
-        for (auto it = children_.begin(); it != children_.end(); ++it)
-        {
-            if (it->tag_ == tag)
-            {
-                ++it;
-                children_.insert(it, std::move(tlv));
-                return true;
-            }
-            if (it->InsertChild(tag, std::move(tlv)))
-            {
-                return true;
-            }
-        }
-    }
-    return false;
+	for (auto it = begin(); it != end(); ++it)
+	{
+		if (it->Tag() == tag)
+		{
+			++it;
+			insert(it, std::move(tlv));
+			return true;
+		}
+		if (it->InsertChild(tag, std::move(tlv)))
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
+
+BinData BerTLVList::ToBin()const
+{
+	BinData ret;
+	for (auto &x : *this)
+	{
+		ret += x.ToBin();
+	}
+	return ret;
+}
+size_t BerTLVList::Len()const
+{
+	size_t ret = 0;
+	for (auto &x : *this)
+	{
+		ret += x.Len();
+	}
+	return ret;
+}
+
 //BinData BerTLV::ToBin()const
 //{
 //    return TToBin() + LToBin() + VToBin();

@@ -81,6 +81,30 @@
     <ClInclude Include="Apdu.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Reader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PCSCReader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Terminal.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CaCert.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RichEditLog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Msg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SymKeyManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="strop.cc">
@@ -105,6 +129,21 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="BerTLVInterpreter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PCSCReader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CaCert.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Apdu.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Msg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SymKeyManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
