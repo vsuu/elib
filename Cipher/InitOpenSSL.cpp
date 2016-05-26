@@ -42,12 +42,12 @@ std::string GetOpensslErrInfo()
 	{
 		if (0 != err)
 		{
-			ss << "openssl error occured : " << std::endl;
-			ss << "errno = " << err << std::endl;
-			ss << "filename = " << file << std::endl;
-			ss << "line number = " << line << std::endl;
-			ss << "data = " << data << std::endl;
-			ss << "reason = " << ERR_reason_error_string(err) << std::endl;
+			ss << "openssl error occured : " << std::endl
+			   <<"errno = " << err << std::endl
+			   << "filename = " << file << std::endl
+			   << "line number = " << line << std::endl
+			   << "data = " << data << std::endl
+			   << "reason = " << ERR_reason_error_string(err) << std::endl;
 		}
 		else
 		{
