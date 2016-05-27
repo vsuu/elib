@@ -11,6 +11,6 @@
 
 #define elif else if
 
-#define C2RNG(x) x.begin(),x.end()
+#define RNG(x) std::begin(x),std::end(x)
 
 #endif // _LIB_BASE_H_RFT
