@@ -11,6 +11,6 @@
 
 #define elif else if
 
-#define Ex2Rg(x) x.begin(),x.end()
+#define C2RNG(x) x.begin(),x.end()
 
 #endif // _LIB_BASE_H_RFT
