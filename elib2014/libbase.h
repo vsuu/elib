@@ -13,4 +13,7 @@
 
 #define RNG(x) std::begin(x),std::end(x)
 
+#define STR(x) #x
+#define XSTR(x) STR(x)
+
 #endif // _LIB_BASE_H_RFT
