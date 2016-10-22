@@ -201,7 +201,7 @@ namespace {
 template<class T>
 BinData IntergerToBin(T i)
 {
-	static_assert(std::is_integral<T>::value, "本函数仅适用整数类型");
+	static_assert(std::is_integral<T>::value, "卤戮潞炉脢媒陆枚脢脢脫脙脮没脢媒脌脿脨脥");
 	unsigned char *p = reinterpret_cast<unsigned char*>(&i);
 	BinData ret(p, p + sizeof(T));
 	if (ENDIANNESS == 'l')
@@ -211,6 +211,32 @@ BinData IntergerToBin(T i)
 	return ret;
 }
 #undef ENDIANNESS
+
+template<class Container>
+Container::value_type &back(Container &container,size_t n)
+{
+	if(n>0 && n<=container.size())
+	{
+		return container[size()-n];
+	}
+	else
+	{
+		throw std::out_of_range("back");
+	}
+}
+
+template<class Container>
+const Container::value_type &back(const Container &container,size_t n)
+{
+	if(n>0 && n<=container.size())
+	{
+		return container[size()-n];
+	}
+	else
+	{
+		throw std::out_of_range("back");
+	}
+}
 
 __LIB_NAME_SPACE_END__
 
