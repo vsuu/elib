@@ -32,72 +32,73 @@ inline void corbaTolocal(const corbaT &corba, localT &local)
 #define CREATEITEMS1(corbaT,localT,corbaItem1,localItem1) \
 static void localToCorbaImpl(const localT&local,corbaT &corba)\
 {\
-    localToCorba(local.##localItem1,corba.##corbaItem1);\
+    localToCorba(local.localItem1,corba.corbaItem1);\
 }\
 static void corbaTolocalImpl(const corbaT &corba, localT&local)\
 {\
-    corbaTolocal(corba.##corbaItem1,local.##localItem1);\
+    corbaTolocal(corba.corbaItem1,local.localItem1);\
 }
 
 #define CREATEITEMS2(corbaT,localT,corbaItem1,localItem1,corbaItem2,localItem2) \
 static void localToCorbaImpl(const localT&local,corbaT &corba)\
 {\
-    localToCorba(local.##localItem1,corba.##corbaItem1);\
-    localToCorba(local.##localItem2,corba.##corbaItem2);\
+    localToCorba(local.localItem1,corba.corbaItem1);\
+    localToCorba(local.localItem2,corba.corbaItem2);\
 }\
 static void corbaTolocalImpl(const corbaT &corba, localT&local)\
 {\
-    corbaTolocal(corba.##corbaItem1,local.##localItem1);\
-    corbaTolocal(corba.##corbaItem2,local.##localItem2);\
+    corbaTolocal(corba.corbaItem1,local.localItem1);\
+    corbaTolocal(corba.corbaItem2,local.localItem2);\
 }
 
 #define CREATEITEMS3(corbaT,localT,corbaItem1,localItem1,corbaItem2,localItem2,corbaItem3,localItem3) \
 static void localToCorbaImpl(const localT&local,corbaT &corba)\
 {\
-    localToCorba(local.##localItem1,corba.##corbaItem1);\
-    localToCorba(local.##localItem2,corba.##corbaItem2);\
-    localToCorba(local.##localItem3,corba.##corbaItem3);\
+    localToCorba(local.localItem1,corba.corbaItem1);\
+    localToCorba(local.localItem2,corba.corbaItem2);\
+    localToCorba(local.localItem3,corba.corbaItem3);\
 }\
 static void corbaTolocalImpl(const corbaT &corba, localT&local)\
 {\
-    corbaTolocal(corba.##corbaItem1,local.##localItem1);\
-    corbaTolocal(corba.##corbaItem2,local.##localItem2);\
-    corbaTolocal(corba.##corbaItem3,local.##localItem3);\
+    corbaTolocal(corba.corbaItem1,local.localItem1);\
+    corbaTolocal(corba.corbaItem2,local.localItem2);\
+    corbaTolocal(corba.corbaItem3,local.localItem3);\
 }
 
 #define CREATEITEMS4(corbaT,localT,corbaItem1,localItem1,corbaItem2,localItem2,corbaItem3,localItem3,corbaItem4,localItem4) \
 static void localToCorbaImpl(const localT&local,corbaT &corba)\
 {\
-    localToCorba(local.##localItem1,corba.##corbaItem1);\
-    localToCorba(local.##localItem2,corba.##corbaItem2);\
-    localToCorba(local.##localItem3,corba.##corbaItem3);\
-    localToCorba(local.##localItem4,corba.##corbaItem4);\
+    localToCorba(local.localItem1,corba.corbaItem1);\
+    localToCorba(local.localItem2,corba.corbaItem2);\
+    localToCorba(local.localItem3,corba.corbaItem3);\
+    localToCorba(local.localItem4,corba.corbaItem4);\
 }\
 static void corbaTolocalImpl(const corbaT &corba, localT&local)\
 {\
-    corbaTolocal(corba.##corbaItem1,local.##localItem1);\
-    corbaTolocal(corba.##corbaItem2,local.##localItem2);\
-    corbaTolocal(corba.##corbaItem3,local.##localItem3);\
-    corbaTolocal(corba.##corbaItem4,local.##localItem4);\
+    corbaTolocal(corba.corbaItem1,local.localItem1);\
+    corbaTolocal(corba.corbaItem2,local.localItem2);\
+    corbaTolocal(corba.corbaItem3,local.localItem3);\
+    corbaTolocal(corba.corbaItem4,local.localItem4);\
 }
 
 #define CREATEITEMS5(corbaT,localT,corbaItem1,localItem1,corbaItem2,localItem2,corbaItem3,localItem3,corbaItem4,localItem4,corbaItem5,localItem5) \
 static void localToCorbaImpl(const localT & local,corbaT &corba)\
 {\
-    localToCorba(local.##localItem1,corba.##corbaItem1);\
-    localToCorba(local.##localItem2,corba.##corbaItem2);\
-    localToCorba(local.##localItem3,corba.##corbaItem3);\
-    localToCorba(local.##localItem4,corba.##corbaItem4);\
-    localToCorba(local.##localItem5,corba.##corbaItem5);\
+    localToCorba(local.localItem1,corba.corbaItem1);\
+    localToCorba(local.localItem2,corba.corbaItem2);\
+    localToCorba(local.localItem3,corba.corbaItem3);\
+    localToCorba(local.localItem4,corba.corbaItem4);\
+    localToCorba(local.localItem5,corba.corbaItem5);\
 }\
 static void corbaTolocalImpl(const corbaT &corba, localT & local)\
 {\
-    corbaTolocal(corba.##corbaItem1,local.##localItem1);\
-    corbaTolocal(corba.##corbaItem2,local.##localItem2);\
-    corbaTolocal(corba.##corbaItem3,local.##localItem3);\
-    corbaTolocal(corba.##corbaItem4,local.##localItem4);\
-    corbaTolocal(corba.##corbaItem5,local.##localItem5);\
+    corbaTolocal(corba.corbaItem1,local.localItem1);\
+    corbaTolocal(corba.corbaItem2,local.localItem2);\
+    corbaTolocal(corba.corbaItem3,local.localItem3);\
+    corbaTolocal(corba.corbaItem4,local.localItem4);\
+    corbaTolocal(corba.corbaItem5,local.localItem5);\
 }
+
 
 
 
